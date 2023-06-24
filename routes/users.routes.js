@@ -9,7 +9,7 @@ router.get("/all", (req, res, next) => {
   //isAuthenticated changeLater
   User.find()
     .then((users) => {
-      console.log('USERSSS: ', users)
+      // console.log('USERSSS: ', users)
       res.json(users)
     })
     .catch((err) => next(err));
