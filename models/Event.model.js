@@ -3,9 +3,9 @@ const { Schema, model } = require("mongoose");
 const eventSchema = new Schema({
   title: { type: String, required: true },
   creator: { type: Schema.Types.ObjectID, ref: "User" },
-  description: { type: String },
+  description: { type: String, default: "holi" },
   icon: { type: String }, //enum, fontawesome (array off html tag)
-  dateTime: { type: Date }, //use luxon
+  dateTime: { type: Date, default: Date.now }, //use luxon
   location: { type: String },
   coordinates: {}, //coordinates (an object wit properties lat & lng)
   pendingJoiners: [{ type: Schema.Types.ObjectID, ref: "User" }],
