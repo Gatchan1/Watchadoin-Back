@@ -50,21 +50,22 @@ router.get("/:username/raw", (req, res, next) => {
     .catch((err) => next(err));
 });
 
+//FIND A USER (for sign up)
+//http://localhost:5005/users/:username/find
+router.get("/:username/find", (req, res, next) => {
+  let { username } = req.params;
+  User.find({ username })
+    .then((resp) => {
+      if (resp.length != 0){
+        res.json(resp);
+        return;
+      }
+      else res.json("username available");
+    })
+    .catch((err) => next(err));
+});
+
 // UPDATE PICTURE
-
-/* // 1- Upload Picture
-//http://localhost:5005/users/upload
-router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
-  //isAuthenticated changeLater
-  if (!req.file) {
-    next((err) => next(err));
-    return;
-  }
-  // Get the URL of the uploaded file and send it as a response.
-  // 'fileUrl' can be any name, just make sure you remember to use the same when accessing it on the frontend  
-  res.json({ fileUrl: req.file.path });
-}); */
-
 
 //Used this tutorial: https://medium.com/geekculture/how-to-upload-images-to-cloudinary-with-a-react-app-f0dcc357999c
 //http://localhost:5005/users/:userId/edit
@@ -79,7 +80,6 @@ router.post("/:userId/edit", (req, res, next)=>{
     res.json(resp);
   })
   .catch((err) => next(err));
-
 })
 
 
