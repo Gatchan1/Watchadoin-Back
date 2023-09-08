@@ -7,7 +7,7 @@ const eventSchema = new Schema({
   icon: { type: String }, //enum, fontawesome (array off html tag)
   dateTime: { type: Date, default: Date.now }, //use luxon
   location: { type: String },
-  coordinates: {}, //coordinates (an object wit properties lat & lng)
+  coordinates: {}, //coordinates (an object with properties lat & lng)
   pendingJoiners: [{ type: Schema.Types.ObjectID, ref: "User" }],
   confirmedJoiners: [{ type: Schema.Types.ObjectID, ref: "User" }],
   // shareable: { type: Boolean },
