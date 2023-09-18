@@ -22,54 +22,54 @@ router.post("/create", isAuthenticated, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-//http://localhost:5005/lists/:listId/update
-router.post("/:listId/update", (req, res, next) => {
-  let { listId } = req.params;
-  let { title } = req.body; //changeLater - isn't there a more elegant way of making this an object right away?
-  let newTitle = {
-    title,
-  };
+// //http://localhost:5005/lists/:listId/update
+// router.post("/:listId/update", (req, res, next) => {
+//   let { listId } = req.params;
+//   let { title } = req.body;
+//   let newTitle = {
+//     title,
+//   };
 
-  List.findByIdAndUpdate(listId, newTitle)
-    .then((list) => {
-      res.json(list);
-    })
-    .catch((err) => next(err));
-});
+//   List.findByIdAndUpdate(listId, newTitle)
+//     .then((list) => {
+//       res.json(list);
+//     })
+//     .catch((err) => next(err));
+// });
 
-//http://localhost:5005/lists/:listId/remove
-router.post("/:listId/remove", (req, res, next) => {
-  let { listId } = req.params;
+// //http://localhost:5005/lists/:listId/remove
+// router.post("/:listId/remove", (req, res, next) => {
+//   let { listId } = req.params;
 
-  List.findByIdAndDelete(listId)
-    .then((list) => {
-      res.json(list);
-    })
-    .catch((err) => next(err));
-});
+//   List.findByIdAndDelete(listId)
+//     .then((list) => {
+//       res.json(list);
+//     })
+//     .catch((err) => next(err));
+// });
 
-//http://localhost:5005/lists/:listId/addFriend
-router.post("/:listId/addFriend", (req, res, next) => {
-  let { listId } = req.params;
-  let { friendId } = req.body;
+// //http://localhost:5005/lists/:listId/addFriend
+// router.post("/:listId/addFriend", (req, res, next) => {
+//   let { listId } = req.params;
+//   let { friendId } = req.body;
 
-  List.findByIdAndUpdate(listId, { $push: { users: friendId } })
-    .then((list) => {
-      res.json(list);
-    })
-    .catch((err) => next(err));
-});
+//   List.findByIdAndUpdate(listId, { $push: { users: friendId } })
+//     .then((list) => {
+//       res.json(list);
+//     })
+//     .catch((err) => next(err));
+// });
 
-//http://localhost:5005/lists/:listId/removeFriend
-router.post("/:listId/removeFriend", (req, res, next) => {
-  let { listId } = req.params;
-  let { friendId } = req.body;
+// //http://localhost:5005/lists/:listId/removeFriend
+// router.post("/:listId/removeFriend", (req, res, next) => {
+//   let { listId } = req.params;
+//   let { friendId } = req.body;
 
-  List.findByIdAndUpdate(listId, { $pull: { users: { $in: [friendId] } } })
-    .then((list) => {
-      res.json(list);
-    })
-    .catch((err) => next(err));
-});
+//   List.findByIdAndUpdate(listId, { $pull: { users: { $in: [friendId] } } })
+//     .then((list) => {
+//       res.json(list);
+//     })
+//     .catch((err) => next(err));
+// });
 
 module.exports = router;

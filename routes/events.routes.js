@@ -38,8 +38,7 @@ router.get("/:eventId", isAuthenticated, (req, res, next) => {
 })
 
 // POST CREATE
-// isAuthenticated changeLater
-router.post("/create", (req, res, next) => {
+router.post("/create", isAuthenticated, (req, res, next) => {
   let { title, description, creator, icon, dateTime, location, coordinates, pendingJoiners } = req.body;
 
   if (req.body.pendingJoiners && typeof req.body.pendingJoiners == "string") {

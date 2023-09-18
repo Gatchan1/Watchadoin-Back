@@ -7,8 +7,7 @@ const fileUploader = require("../config/cloudinary.config")
 
 //ROUTE TO GET ALL USERS FOR FINDFRIENDS
 //http://localhost:5005/users/all
-router.get("/all", (req, res, next) => {
-  //isAuthenticated changeLater
+router.get("/all", isAuthenticated, (req, res, next) => {
   User.find()
     .then((users) => {
       // console.log('USERSSS: ', users)
@@ -19,8 +18,7 @@ router.get("/all", (req, res, next) => {
 
 //RETRIEVE A USER DATA: POPULATED ROUTE
 //http://localhost:5005/users/:username
-router.get("/:username", (req, res, next) => {
-  //removed isAuthenticated because needs to be accessible from other users as well changeLater
+router.get("/:username", isAuthenticated, (req, res, next) => {
   let { username } = req.params;
   User.findOne({ username: username })
     .populate("eventsCreated eventsJoined eventsPending friendsPending inviteLists friendsConfirmed notifications" )
@@ -40,7 +38,7 @@ router.get("/:username", (req, res, next) => {
 //RETRIEVE A USER DATA: THIS ONE IS NOT POPULATED
 //http://localhost:5005/users/:username/raw
 // We need one unpopulated GET by username for when retrieving info of user profiles. 
-router.get("/:username/raw", (req, res, next) => {
+router.get("/:username/raw", isAuthenticated, (req, res, next) => {
   //removed isAuthenticated changeLater
   let { username } = req.params;
   User.findOne({ username: username })
@@ -69,7 +67,7 @@ router.get("/:username/find", (req, res, next) => {
 
 //Used this tutorial: https://medium.com/geekculture/how-to-upload-images-to-cloudinary-with-a-react-app-f0dcc357999c
 //http://localhost:5005/users/:userId/edit
-router.post("/:userId/edit", (req, res, next)=>{
+router.post("/:userId/edit", isAuthenticated, (req, res, next)=>{
   const {userId} = req.params
   const {imageUrl} = req.body
 

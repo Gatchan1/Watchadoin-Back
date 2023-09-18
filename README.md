@@ -1,18 +1,24 @@
 
 # Watchadoin' - back end
-Developed as the final project of our web development bootcamp at Ironhack Barcelona. It's a MERN Stack application, check the frontend repository [here](https://github.com/youraccount/repo).
+This is a fork of the final project of our web development bootcamp at Ironhack Barcelona. It's a MERN Stack application, check the frontend repository [here](https://github.com/Gatchan1/watchadoin-front).
 Watchadoin' is a social network that allows users to share and join casual plans within their peer group. Users will be able to know what their friends are up to and join in on their plans. Users will only be shown events, that the event creator welcomes them to join.
 
 ## About us
-Our names are Camila Buldin, Lisa Schwetlick and Raquel Barrio.
+Our names are Raquel Barrio, Camila Buldin and Lisa Schwetlick.
 
-![Project Image](https://t4.ftcdn.net/jpg/01/45/03/99/360_F_145039942_TlScPbqEWiBMPpfSyJyhBBCPcr1l52dP.jpg "Project Image")
+![Project Image](https://res.cloudinary.com/dqzjo5wsl/image/upload/v1694678259/watcha-front_hlawdu.png "Project Image")
 
 ## Deployment
 You can check the app fully deployed [here](https://www.cactuscoleccion.com/). If you wish to view the API deployment instead, check [here](https://www.cactuscoleccion.com/).
 
 ## Work structure
 We used [Discord](https://discord.com/) to organize our workflow.
+
+## Disclaimer
+I realise the loading of many pages gives an uncomfortable user experience, this is something I still have to work around.
+Also I have lots of missing features I'd like to include in the future, such as:
+-Automatically hiding past events.
+-Editing and deleting Friends Circles.
 
 ## Installation guide
 - Fork this repo
@@ -101,14 +107,7 @@ const notificationSchema = new Schema({
 | POST   |/friendstatus/:friendId/remove| const friendId = req.params.friendId, current userId               | json(response.data)                    | Will remove the current user ID from the other users' confirmed friends and vice versa.|
 | POST   |/friendstatus/:friendId/sendRequest| const friendId = req.params.friendId, current user Id               | json(response.data)                    | Add the current user Id to pending friends of the other user, add a notification for the other user.|
 | POST   | /lists/create               | {name, userIds}                | json(response.data)                    |Create a new object inside the current users' array of inviteLists, adding list Id to users' lists, adding the Id of each user that was added to the list.     
-| POST   | /lists/:listId/update       | const { name } = req.body, const { listId } = req.params               | json(response.data)                    | Changing name of a friendList of current user.                                       |
-| POST   | /lists/:listId/delete       |  const { listId } = req.params | json(response.data)                    | Deleting a invitelist, removing it's Id from current user lists                                       |
-| POST   | /lists/:listId/addFriend       | const { listId } = req.params, const { userId } = req.body | json(response.data)                    | Adding the Id of a user to a friend list                                       |
-| POST   | /lists/:listId/removeFriend       |   const { listId } = req.params, const { userId } = req.body | json(response.data)                    | Removing a userId from a friendList                                     |
-FUNCTION notifications-create
-FUNCTION notifications-unNew
-
-
+...
                                
 
 
