@@ -9,7 +9,7 @@ Our names are Raquel Barrio, Camila Buldin and Lisa Schwetlick.
 ![Project Image](https://res.cloudinary.com/dqzjo5wsl/image/upload/v1694678259/watcha-front_hlawdu.png "Project Image")
 
 ## Deployment
-You can check the app fully deployed [here](https://www.cactuscoleccion.com/). If you wish to view the API deployment instead, check [here](https://www.cactuscoleccion.com/).
+You can check the app fully deployed [here](https://watchadoin.netlify.app/). If you wish to view the API deployment instead, check [here](https://watchadoin.fly.dev/).
 
 ## Work structure
 We used [Discord](https://discord.com/) to organize our workflow.
@@ -21,6 +21,7 @@ Also I have lots of missing features I'd like to include in the future, such as:
 
 - Automatically hiding past events.
 - Editing and deleting Friends Circles.
+- Implement password retrieval.
 
 ## Installation guide
 - Fork this repo
@@ -77,18 +78,6 @@ const listSchema = new Schema({
   users: [{ type: schema.Types.ObjectID, ref: "User" }]
 });
 ```
-#### Notification.model.js
-```js
-const notificationSchema = new Schema({
-    sentBy: { type: Schema.Types.ObjectID, ref: "User" },
-    type: { type: String, enum: ["friendReq", "friendAcc", "eventJoin", "comments"] },
-    eventId: { type: Schema.Types.ObjectID, ref: "Event" },
-    new: {type: Boolean, default: true}
-  },
-  {
-    timestamps: true,
-  });
-```
 
 
 ## API Routes
@@ -111,13 +100,3 @@ const notificationSchema = new Schema({
 | POST   | /lists/create               | {name, userIds}                | json(response.data)                    |Create a new object inside the current users' array of inviteLists, adding list Id to users' lists, adding the Id of each user that was added to the list.     
 ...
                                
-
-
-## External API used
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ultricies ante id ligula pretium, a volutpat augue lobortis. Pro
-
-| Method | Endpoint                    | Require                                             | Response (200)                                                        | Action                                                                    |
-| :----: | --------------------------- | --------------------------------------------------- |----------------------------------------| ------------------------------------------------------------------------- |
-| POST   | /signup                     | const { username, email, password } = req.body      | json({user: user})                     | Registers the user in the database and returns the logged in user.        |
-| POST   | /login                      | const { email, password } = req.body                | json({authToken: authToken})           | Logs in a user already registered.                                        |
