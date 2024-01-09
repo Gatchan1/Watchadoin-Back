@@ -37,16 +37,16 @@ router.post("/create", isAuthenticated, (req, res, next) => {
 //     .catch((err) => next(err));
 // });
 
-// //http://localhost:5005/lists/:listId/remove
-// router.post("/:listId/remove", (req, res, next) => {
-//   let { listId } = req.params;
+//http://localhost:5005/lists/:listId/remove
+router.post("/:listId/remove", (req, res, next) => {
+  let { listId } = req.params;
 
-//   List.findByIdAndDelete(listId)
-//     .then((list) => {
-//       res.json(list);
-//     })
-//     .catch((err) => next(err));
-// });
+  List.findByIdAndDelete(listId)
+    .then((list) => {
+      res.json(list);
+    })
+    .catch((err) => next(err));
+});
 
 // //http://localhost:5005/lists/:listId/addFriend
 // router.post("/:listId/addFriend", (req, res, next) => {
