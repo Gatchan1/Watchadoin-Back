@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User.model");
+const List = require("../models/List.model");
 const isAuthenticated = require("../middleware/jwt.middleware");
 
 //http://localhost:5005/friendstatus/:friendId/accept
@@ -35,6 +36,14 @@ router.post("/:friendId/revoke", isAuthenticated, (req, res, next) => {
       return User.findByIdAndUpdate(friendId, {
         $pull: { friendsConfirmed: currentUserId },
       });
+    })
+    .then(() => {
+      return User.findById(currentUserId).populate("inviteLists");
+    })
+    .then((resp) => {
+      const affectedInviteLists = resp.inviteLists.filter((inviteList) => inviteList.users.includes(friendId));
+      const queries = affectedInviteLists.map((list) => List.findByIdAndUpdate(list._id, { $pull: { users: friendId } }));
+      return Promise.all(queries);
     })
     .then((resp) => {
       res.json("friendship successfully revoked");
