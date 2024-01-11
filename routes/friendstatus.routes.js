@@ -13,29 +13,29 @@ router.post("/:friendId/accept", isAuthenticated, (req, res, next) => {
     $push: { friendsConfirmed: friendId },
     $pull: { friendsPending: friendId },
   })
-  .then(()=>{
-    return User.findByIdAndUpdate(friendId, {
-      $push: { friendsConfirmed: currentUserId },
+    .then(() => {
+      return User.findByIdAndUpdate(friendId, {
+        $push: { friendsConfirmed: currentUserId },
+      });
     })
-  })
     .then((resp) => {
       res.json("friendship successfully accepted");
     })
     .catch((err) => next(err));
 });
 
-//http://localhost:5005/friendstatus/:friendId/remove
-router.post("/:friendId/remove", isAuthenticated, (req, res, next) => {
+//http://localhost:5005/friendstatus/:friendId/revoke
+router.post("/:friendId/revoke", isAuthenticated, (req, res, next) => {
   let currentUserId = req.payload.userId;
   let { friendId } = req.params;
   User.findByIdAndUpdate(currentUserId, {
     $pull: { friendsConfirmed: friendId },
   })
-  .then(()=>{
-    return User.findByIdAndUpdate(friendId, {
-      $pull: { friendsConfirmed: currentUserId },
+    .then(() => {
+      return User.findByIdAndUpdate(friendId, {
+        $pull: { friendsConfirmed: currentUserId },
+      });
     })
-  })
     .then((resp) => {
       res.json("friendship successfully revoked");
     })
@@ -61,6 +61,19 @@ router.post("/:friendId/sendrequest", isAuthenticated, (req, res, next) => {
       return;
     }
   });
+});
+
+//http://localhost:5005/friendstatus/:friendId/reject
+router.post("/:friendId/reject", isAuthenticated, (req, res, next) => {
+  let currentUserId = req.payload.userId;
+  let { friendId } = req.params;
+  User.findByIdAndUpdate(currentUserId, {
+    $pull: { friendsPending: friendId },
+  })
+    .then((resp) => {
+      res.json("friendship successfully rejected");
+    })
+    .catch((err) => next(err));
 });
 
 module.exports = router;
