@@ -38,11 +38,21 @@ router.post("/:friendId/revoke", isAuthenticated, (req, res, next) => {
       });
     })
     .then(() => {
+      // Find your invite lists so that we can remove the other user out of them.
       return User.findById(currentUserId).populate("inviteLists");
     })
     .then((resp) => {
       const affectedInviteLists = resp.inviteLists.filter((inviteList) => inviteList.users.includes(friendId));
       const queries = affectedInviteLists.map((list) => List.findByIdAndUpdate(list._id, { $pull: { users: friendId } }));
+      return Promise.all(queries);
+    })
+    .then(() => {
+      // Find THEIR invite lists so that we can remove your own user out of them.
+      return User.findById(friendId).populate("inviteLists");
+    })
+    .then((resp) => {
+      const affectedInviteLists = resp.inviteLists.filter((inviteList) => inviteList.users.includes(currentUserId));
+      const queries = affectedInviteLists.map((list) => List.findByIdAndUpdate(list._id, { $pull: { users: currentUserId } }));
       return Promise.all(queries);
     })
     .then((resp) => {
